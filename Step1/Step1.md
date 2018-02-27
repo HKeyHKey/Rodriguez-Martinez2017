@@ -2,11 +2,11 @@
 
 Raw microarray data are accessible at NCBI's GEO, under [accession number GSE86651](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE86651 "GEO dataset").
 
-Create a directory named "Raw_Data/" and copy the ".pair" file for the sample type of interest (either "2-40 cell", or "Mix", or the "L1" negative control, or the "RNase" negative control) in that directory.
+In directory "$PWD/Aurore_Emmanuelle_scripts_par_Herve/": create a directory named "Raw_Data/" and copy the ".pair" file for the sample type of interest (either "2-40 cell", or "Mix", or the "L1" negative control, or the "RNase" negative control) in that directory.
 
 Then for each of these 4 sample types, run the first R command script:
 
-Copy the "2-40 cell" data in Raw_Data/, then:
+Copy the "2-40 cell" data in Raw_Data/, then (in directory "$PWD/Aurore_Emmanuelle_scripts_par_Herve/"):
 
 `R CMD BATCH 2_40_cells_01_Lecture_des_donnees_+_Normalisation.R`
 
