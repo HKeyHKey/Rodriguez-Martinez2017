@@ -4,4 +4,5 @@ Scripts and data for the generation of figures in [Rodríguez-Martínez et al. (
 The following instructions assume that you will be working in a directory called $PWD/:
 
 1. Data extraction (normalization, background subtraction, peak identification): directory 'Step1'. These scripts were written by Emmanuelle Beyne with some help from Aurore Puy, then adapted by Hervé Seitz for homogeneity and compatibility with the following steps. See instructions in file 'Step1.md' in directory 'Step1'.
-2. Extraction of highest array peaks in each origin: directory 'Step2'. These scripts were written by Natalia Pinzón and Hervé Seitz. See instructions in file 'Step2.md' in directory 'Step2'.
+2. Extraction of highest array peaks in each origin, identification of replication origins that are specific to the "Mix" sample (and do not appear in the "2-40 cells" sample), and conversion of Ce6 assembly coordinates to Ce10 assembly coordinates: directory 'Step2'. These scripts were written by Natalia Pinzón and Hervé Seitz. See instructions in file 'Step2.md' in directory 'Step2'.
+3. 
