@@ -10,7 +10,7 @@ wig=$1
    ./Module_finds_chopping_sites.pl $wig
    #date=`date +%s`
    #display_date=`echo $display_date $date`
-   for ORI_file in `ls /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Maximum_probe_coordinates/maximum_probes_coordinates_* | grep -v coordinates_oris`    
+   for ORI_file in `ls $PWD/Maximum_probe_coordinates/maximum_probes_coordinates_* | grep -v coordinates_oris`    
    do display_ORI_file=`echo $ORI_file | sed 's|.*/||'`
       for f in `ls Chunk_*`
       do for region in autosome_arm autosome_center X_arm X_center
@@ -39,7 +39,7 @@ wig=$1
             done
             bzip2 ChIP_vs_ORI_$type'_'$display_ORI_file'_'$region'_on_Chunk_'[0-9]*'_from_'$display_wig_file'.txt'
             mv ChIP_vs_ORI_$type'_'$display_ORI_file'_'$region'_on_Chunk_'[0-9]*'_from_'$display_wig_file'.txt.bz2' ChIP_files/
-            cp Stats_$region'_'$type'_'$display_ORI_file'_on_'$display_wig_file'.dat' /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Comparison_to_ChIP/Results/
+            cp Stats_$region'_'$type'_'$display_ORI_file'_on_'$display_wig_file'.dat' $PWD/Comparison_to_ChIP/Results/
          done
 
          #date=`date +%s`
@@ -52,7 +52,7 @@ wig=$1
    echo "***"
    echo "Done with "$display_wig_file"."
    mv Chunk_* Chunk_backup/
-   cd /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Comparison_to_ChIP/Results
+   cd $PWD/Comparison_to_ChIP/Results
    for region in autosome_arm autosome_center X_arm X_center
    do for stage in '2-40_cells' 'Mix_only'
       do Rscript R_commands_display_comparison_to_ChIP $region $stage $display_wig_file
