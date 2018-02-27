@@ -6,12 +6,11 @@ Create a directory named "Raw_Data/" and copy the ".pair" file for the sample ty
 
 Then for each of these 4 sample types, run the first R command script:
 
-`#(copy the "2-40 cell" data in Raw_Data/)
-R CMD BATCH 2_40_cells_01_Lecture_des_donnees_+_Normalisation.R
-#(copy the "Mix" data in Raw_Data/)
-R CMD BATCH Mix_01_Lecture_des_donnees_+_Normalisation.R
-#(copy the L1 data in Raw_Data/)
-R CMD BATCH L1_01_Lecture_des_donnees_+_Normalisation.R
-#(copy the RNase data in Raw_Data/)
-R CMD BATCH RNase_01_Lecture_des_donnees_+_Normalisation.R`
-
+`#copy the "2-40 cell" data in Raw_Data/, then:`
+`R CMD BATCH 2_40_cells_01_Lecture_des_donnees_+_Normalisation.R`
+`#copy the "Mix" data in Raw_Data/, then:`
+`R CMD BATCH Mix_01_Lecture_des_donnees_+_Normalisation.R`
+`#copy the L1 data in Raw_Data/, then:`
+`R CMD BATCH L1_01_Lecture_des_donnees_+_Normalisation.R`
+`#copy the RNase data in Raw_Data/, then:`
+`R CMD BATCH RNase_01_Lecture_des_donnees_+_Normalisation.R`
