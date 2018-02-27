@@ -1,0 +1,48 @@
+args <- commandArgs(TRUE)
+region=args[1]
+stage=args[2]
+ChIP=args[3]
+
+if (ChIP=='Ce10_01_PolII_GSE22669_ABAB5408_4H8_N2_MXEMB_1_ce5.wig') ChIP_name='Pol II (replicate 1)'
+if (ChIP=='Ce10_02_PolII_GSE22669_ABAB5408_4H8_N2_MXEMB_2_ce5.wig') ChIP_name='Pol II (replicate 2)'
+if (ChIP=='Ce10_03_H3K4ME3_EEMB_NormLis_1.wig') ChIP_name='H3K4Me3 (replicate 1)'
+if (ChIP=='Ce10_04_H3K4ME3_EEMB_NormLis_2.wig') ChIP_name='H3K4Me3 (replicate 2)'
+if (ChIP=='Ce10_05_H3K4ME3_EEMB_NormLis_3.wig') ChIP_name='H3K4Me3 (replicate 3)'
+if (ChIP=='Ce10_06_H3K27AC_EEMB_NormLis_1.wig') ChIP_name='H3K27Ac (replicate 1)'
+if (ChIP=='Ce10_07_H3K27AC_EEMB_NormLis_2.wig') ChIP_name='H3K27Ac (replicate 2)'
+if (ChIP=='Ce10_08_AB4729_H3K27AC361571_N2_EEMB_1_ce5.wig') ChIP_name='H3K27Ac (replicate 3)'
+if (ChIP=='Ce10_09_HTZ1_MXEMB_Norm_1.wig') ChIP_name='HTZ1 (replicate 1)'
+if (ChIP=='Ce10_10_HTZ1_MXEMB_Norm_2.wig') ChIP_name='HTZ1 (replicate 2)'
+if (ChIP=='Ce10_11_HTZ1_MXEMB_Norm_3.wig') ChIP_name='HTZ1 (replicate 3)'
+if (ChIP=='Ce10_12_H3K4ME1_EEMB_1.wig') ChIP_name='H3K4Me1 (replicate 1)'
+if (ChIP=='Ce10_13_H3K4ME1_EEMB_2.wig') ChIP_name='H3K4Me1 (replicate 2)'
+
+if (stage=='2-40_cells')
+real=read.table(paste('Stats_',region,'_middle_maximum_probes_coordinates_Ce10_oris.ech2.40a.40b.40c.3rep.txt_on_',ChIP,'.dat',sep=''),header=F)
+if (stage=='Mix_only')
+real=read.table(paste('Stats_',region,'_middle_maximum_probes_coordinates_Ce10_oris.Mix_only.txt_on_',ChIP,'.dat',sep=''),header=F)
+
+random_mean=c()
+#random_se=c()
+for (set in 1:100)
+{
+random=read.table(paste('Stats_',region,'_middle_maximum_probes_coordinates_Random_set_of_boxes_',stage,'_',set,'.txt_on_',ChIP,'.dat',sep=''),header=F)
+random_mean=rbind(random_mean,random$V2)
+#random_se=rbind(random_se,random$V4)
+}
+
+x=real$V1
+xrange=c(0,max(x)+0.01*max(x))
+yrange=c(min(random_mean,real$V2)-0.01*min(random_mean,real$V2),max(random_mean,real$V2)+0.01*max(random_mean,real$V2))
+title=paste(region,' origins vs.\n',ChIP_name,' in ',stage,sep='')
+file_name=paste(region,'_origins_vs_',gsub(' ','_',ChIP_name),'_in_',stage,sep='')
+pdf(paste(file_name,'.pdf',sep=''),width=8,height=6)
+for (set in 1:100)
+{
+plot(x,random_mean[set,],ty='l',xlim=xrange,ylim=yrange,axes=F,xlab='',ylab='',col='grey',lwd=2)
+par(new=T)
+}
+plot(x,real$V2,ty='l',col='red',xlim=xrange,ylim=yrange,lwd=2,xlab='Distance to origin peak (bp)',ylab='ChIP signal',main=title,axes=F)
+axis(1)
+axis(2)
+dev.off()

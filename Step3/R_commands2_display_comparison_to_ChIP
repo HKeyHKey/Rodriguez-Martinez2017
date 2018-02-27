@@ -1,7 +1,7 @@
 args <- commandArgs(TRUE)
 region=args[1]
 stage=args[2]
-ChIP=c(args[3],args[4],args[5])
+ChIP=c(args[3],args[4])
 
 if (length(grep('PolII',ChIP)) > 0) ChIP_name='Pol II'
 if (length(grep('H3K4ME3',ChIP)) > 0) ChIP_name='H3K4ME3'
@@ -9,7 +9,6 @@ if (length(grep('H3K27AC',ChIP)) > 0) ChIP_name='H3K27AC'
 if (length(grep('HTZ1',ChIP)) > 0) ChIP_name='HTZ1'
 if (length(grep('H3K4ME1',ChIP)) > 0) ChIP_name='H3K4ME1'
 if (length(grep('Mononucleosomes',ChIP)) > 0) ChIP_name='Mononucleosomes'
-if (length(grep('H3K36ME3',ChIP)) > 0) ChIP_name='H3K36ME3'
 
 real_replicates=c()
 random_replicates=list()
@@ -47,7 +46,7 @@ averaged_random=cbind(averaged_random,apply(for_averaging,1,mean))
 
 x=real$V1
 xrange=c(0,max(x)+0.01*max(x))
-yrange=c(min(averaged_random,averaged_real,na.rm=T)-0.01*abs(min(averaged_random,averaged_real,na.rm=T)),max(averaged_random,averaged_real,na.rm=T)+0.01*abs(max(averaged_random,averaged_real,na.rm=T)))
+yrange=c(min(averaged_random,averaged_real)-0.01*abs(min(averaged_random,averaged_real)),max(averaged_random,averaged_real)+0.01*abs(max(averaged_random,averaged_real)))
 title=paste(region,' origins vs.\n',ChIP_name,' in ',stage,sep='')
 file_name=paste(region,'_origins_vs_',gsub(' ','_',ChIP_name),'_in_',stage,sep='')
 pdf(paste(file_name,'.pdf',sep=''),width=8,height=6)
