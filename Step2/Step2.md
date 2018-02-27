@@ -52,8 +52,24 @@ Then:
 
 Result: files '$PWD/Ce6_to_Ce10_conversion/Ce10_ech2.40a.40b.40c.3rep.txt' and '$PWD/Ce6_to_Ce10_conversion/Ce10_ech2.Mixa.Mixb.Mixc.3rep.txt', with probe positions updated to Ce10.
 
+# 6. Generation of "negative controls" (genomic segments with the same size distribution than actual replication origins, but which do not overlap with actual origins):
 
-# 6. Extraction of maximum probe coordinates for negative controls:
+``cd $PWD/Negative_control;for f in Ce10_oris.ech2.40a.40b.40c.3rep.gff Ce10_oris.ech2.Mixa.Mixb.Mixc.3rep.gff Ce10_oris.Mix_only.gff;do cp $PWD/Ce6_to_Ce10_conversion/$f .;done;for f in `ls Ce10*.gff`;do ./Script_negative_control.sh $f;done``
+
+Conversion of 'Random_*.dat' files into GFF files:
+
+``for sample in ech2.40a.40b.40c.3rep ech2.Mixa.Mixb.Mixc.3rep Mix_only;do case "$sample" in "ech2.40a.40b.40c.3rep") sample_name='2-40_cells';;"ech2.Mixa.Mixb.Mixc.3rep") sample_name='Mix';;"Mix_only") sample_name='Mix_only';;esac;for i in `seq 1 100`;do awk '{print $1"\tRandom_set_of_boxes_'$sample_name'_'$i'\tRandom\t"$2"\t"$3"\t1\t0\t0\tcolor=000000;"}' Random_set_of_boxes_$sample'_'$i'.dat' > Random_set_of_boxes_$sample_name'_'$i'.gff';done;done``
+
+Statistics on real ORI distribution among chromosome arms and centers:
+
+``for sample in `ls Ce10*.gff`;do case "$sample" in "Ce10_oris.ech2.40a.40b.40c.3rep.gff") sample_name='2-40_cells';;  "Ce10_oris.ech2.Mixa.Mixb.Mixc.3rep.gff") sample_name='Mix';;"Ce10_oris.Mix_only.gff") sample_name='Mix_only';;esac;for chr in chrI chrII chrIII chrIV chrV chrX;do for region in Left_arm Center Right_arm;do if test -f $region'_'$chr'_real_box_lengths_from_'$sample'.dat';then nb=`cat $region'_'$chr'_real_box_lengths_from_'$sample'.dat' | wc -l`;echo $chr","$region","$nb;fi;done;done > Genomic_distribution_of_ORIs_in_$sample_name'.csv';done``
+
+Verification that real and random ORIs have the same distribution among chromosome arms and centers:
+
+``for f in `ls Random_set_of_boxes_*.gff`;do ./Module_controls_genomic_distribution.pl $f Chromosome_organization.dat;done;for sample in `ls Ce10*.gff`;do case "$sample" in "Ce10_oris.ech2.40a.40b.40c.3rep.gff") sample_name='2-40_cells';;                  "Ce10_oris.ech2.Mixa.Mixb.Mixc.3rep.gff") sample_name='Mix';;"Ce10_oris.Mix_only.gff") sample_name='Mix_only';;esac;for chr in chrI chrII chrIII chrIV chrV chrX;do for region in Left_arm Center Right_arm;do if test "$chr" != "chrX" -o "$region" != "Right_arm";then wc -l $region'_'$chr'_from_Random_set_of_boxes_'$sample_name'_'* $region'_'$chr'_real_box_lengths_from_'$sample'.dat' | grep -vw total | awk '{print $1}' | sort | uniq -c;fi;done;done;done``
+
+
+# 7. Extraction of maximum probe coordinates for negative controls:
 
 Parallelized on 8 processors:
 
