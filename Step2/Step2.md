@@ -16,11 +16,11 @@ Result: there are 7658 common ORIs, and the remaining 8214 "Mix" ORIs are "Mix_o
 
 # 4. Extraction of maximum probe coordinates for 'Mix_only':
 
-``./Module_maximum_probe_coordinates.pl ../Sample_ORI_comparison/oris.Mix_only.gff /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.Mixa.Mixb.Mixc.3rep.txt``
+``./Module_maximum_probe_coordinates.pl ../Sample_ORI_comparison/oris.Mix_only.gff $PWD/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.Mixa.Mixb.Mixc.3rep.txt``
 
 # 5. Conversion of microarray signal values from the Ce6 assembly version to Ce10:
 
-``cd $PWD/Ce6_to_Ce10_conversion;for f in `ls /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Aurore_Emmanuelle_scripts_par_Herve/Regions_ORIs_comb/*.gff` /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Sample_ORI_comparison/oris.Mix_only.gff;do name=`echo $f | sed -e 's|\.gff$|.bed|' -e 's|.*/||'`;awk '{print $1,$4,$5,$9}' $f > $name;done``
+``cd $PWD/Ce6_to_Ce10_conversion;for f in `ls $PWD/Aurore_Emmanuelle_scripts_par_Herve/Regions_ORIs_comb/*.gff` $PWD/Sample_ORI_comparison/oris.Mix_only.gff;do name=`echo $f | sed -e 's|\.gff$|.bed|' -e 's|.*/||'`;awk '{print $1,$4,$5,$9}' $f > $name;done``
 
 Then conversion of these Ce6 BED to Ce10 BED using http://genome.ucsc.edu/cgi-bin/hgLiftOver with default parameters ("Minimum ratio of bases that must overlap" = 0.95; BED 4 to BED 6 Options: "Allow multiple output regions" unchecked; "Minimum hit size in query" = 0; "Minimum chain size in target" = 0; BED12 Options: "Min ratio of alignment blocks or exons that must map" = 1; "If thickStart/thickEnd is not mapped, use the closest mapped base" unckecked); output files saved as 'Ce10_oris.ech2.40a.40b.40c.3rep.bed', 'Ce10_oris.ech2.Mixa.Mixb.Mixc.3rep.bed' and 'Ce10_oris.Mix_only.bed'.
 
@@ -40,14 +40,14 @@ Conversion of "maximum probe" Ce10 BED to TXT:
 
 Conversion of microarray signal value files into Ce10 for "maximum probe coordinate" extraction for Ce10-based negative controls:
 
-``for f in /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.40a.40b.40c.3rep.txt #/mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.Mixa.Mixb.Mixc.3rep.txt (only one is needed: the output files would be identical);do name=`echo $f | sed -e 's|.*/||' -e 's|\.txt$|.bed|'`;   tail -n +2 $f | awk '{print $2,$3,$3+$4-1,$1}' > $name;done # this will generate BED versions of microarray signal value files``
+``for f in $PWD/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.40a.40b.40c.3rep.txt #/$PWD/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.Mixa.Mixb.Mixc.3rep.txt (only one is needed: the output files would be identical);do name=`echo $f | sed -e 's|.*/||' -e 's|\.txt$|.bed|'`;   tail -n +2 $f | awk '{print $2,$3,$3+$4-1,$1}' > $name;done # this will generate BED versions of microarray signal value files``
 
 Then conversion of these Ce6 BED to Ce10 BED using http://genome.ucsc.edu/cgi-bin/hgLiftOver with default parameters ("Minimum ratio of bases that must overlap" = 0.95; BED 4 to BED 6 Options: "Allow multiple output regions" unchecked; "Minimum hit size in query" = 0; "Minimum chain size in target" = 0; BED12 Options: "Min ratio of alignment blocks or exons that must map" = 1; "If thickStart/thickEnd is not mapped, use the closest mapped base" unckecked); output file saved as 'Ce10_ech2.40a.40b.40c.3rep.bed'.
 The output contains one less probe: "chrIII 10505362    10505411    CHRIIIFS010505362" could not be converted by hgLiftOver.
 
 Then:
 
-``./Module_Ce10_conversion_for_maximum_probe_coordinates.pl Ce10_ech2.40a.40b.40c.3rep.bed /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.40a.40b.40c.3rep.txt;./Module_Ce10_conversion_for_maximum_probe_coordinates.pl Ce10_ech2.40a.40b.40c.3rep.bed /mnt/data/home/herve.seitz/Analyses_for_paper_July2015/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.Mixa.Mixb.Mixc.3rep.txt``
+``./Module_Ce10_conversion_for_maximum_probe_coordinates.pl Ce10_ech2.40a.40b.40c.3rep.bed $PWD/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.40a.40b.40c.3rep.txt;./Module_Ce10_conversion_for_maximum_probe_coordinates.pl Ce10_ech2.40a.40b.40c.3rep.bed $PWD/Aurore_Emmanuelle_scripts_par_Herve/Data_comb/ech2.Mixa.Mixb.Mixc.3rep.txt``
 
 
 Result: files '$PWD/Ce6_to_Ce10_conversion/Ce10_ech2.40a.40b.40c.3rep.txt' and '$PWD/Ce6_to_Ce10_conversion/Ce10_ech2.Mixa.Mixb.Mixc.3rep.txt', with probe positions updated to Ce10.
