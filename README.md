@@ -1,5 +1,5 @@
 # Rodriguez-Martinez2017
-Scripts and data for the generation of figures in [Rodríguez-Martínez et al. (Nature Structural and Molecular Biology, 2017)](https://www.ncbi.nlm.nih.gov/pubmed/28112731 "PubMed link").
+Scripts and data for the generation of figures in [Rodríguez-Martínez et al. (*Nature Structural and Molecular Biology*, 2017)](https://www.ncbi.nlm.nih.gov/pubmed/28112731 "PubMed link").
 
 The following instructions assume that you will be working in a directory called $PWD/:
 
